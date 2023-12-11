@@ -1,0 +1,174 @@
+.frame {
+  background-color: #e5f9fd;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.frame .div {
+  background-color: #e5f9fd;
+  width: 300px;
+  height: 350px;
+  position: relative;
+}
+
+.frame .image {
+  position: absolute;
+  width: 151px;
+  height: 41px;
+  top: 13px;
+  left: 74px;
+  object-fit: cover;
+}
+
+.frame .block-trees {
+  position: absolute;
+  width: 208px;
+  height: 254px;
+  top: 64px;
+  left: 47px;
+}
+
+.frame .overlap {
+  position: relative;
+  width: 206px;
+  height: 254px;
+  background-color: #ffffffb8;
+  border-radius: 4.2px;
+  box-shadow: 1.1px 1.1px 4.02px #d4d4d440;
+}
+
+.frame .block-price-button {
+  position: absolute;
+  width: 88px;
+  height: 25px;
+  top: 201px;
+  left: 61px;
+}
+
+.frame .overlap-group {
+  position: relative;
+  width: 86px;
+  height: 25px;
+  background-color: #13aa52;
+  border-radius: 4.2px;
+}
+
+.frame .text-wrapper {
+  position: absolute;
+  width: 41px;
+  top: 2px;
+  left: 23px;
+  font-family: "Cormorant Garamond", Helvetica;
+  font-weight: 400;
+  color: #ffffffb8;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frame .overlap-2 {
+  position: absolute;
+  width: 119px;
+  height: 76px;
+  top: 6px;
+  left: 50px;
+}
+
+.frame .block-subtitle {
+  position: absolute;
+  width: 119px;
+  top: 53px;
+  left: 0;
+  font-family: "Roboto Slab", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frame .block-icon-trees {
+  position: absolute;
+  width: 53px;
+  height: 55px;
+  top: 0;
+  left: 26px;
+}
+
+.frame .group {
+  position: absolute;
+  width: 122px;
+  height: 38px;
+  top: 147px;
+  left: 42px;
+}
+
+.frame .group-2 {
+  position: relative;
+  width: 124px;
+  height: 38px;
+}
+
+.frame .rectangle {
+  position: absolute;
+  width: 122px;
+  height: 19px;
+  top: 18px;
+  left: 0;
+  background-color: #13aa5273;
+  border-radius: 9px;
+}
+
+.frame .text-wrapper-2 {
+  width: 83px;
+  position: absolute;
+  top: 0;
+  left: 1px;
+  font-family: "Roboto Slab", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.frame .group-wrapper {
+  position: absolute;
+  width: 122px;
+  height: 39px;
+  top: 102px;
+  left: 42px;
+}
+
+.frame .group-3 {
+  position: relative;
+  width: 124px;
+  height: 39px;
+}
+
+.frame .rectangle-2 {
+  position: absolute;
+  width: 122px;
+  height: 19px;
+  top: 20px;
+  left: 0;
+  background-color: #13aa5273;
+  border-radius: 9px;
+}
+
+.frame .text-wrapper-3 {
+  width: 80px;
+  position: absolute;
+  top: 0;
+  left: 1px;
+  font-family: "Roboto Slab", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 12px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
