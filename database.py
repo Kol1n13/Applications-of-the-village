@@ -82,6 +82,21 @@ def search_users_db():
     return all_results
 
 
+def search_specialists_db():
+    with sqlite3.connect('specialists.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM specialists")
+        all_results = cursor.fetchall()
+    return all_results
+
+def get_dictionary_of_specialists():
+    data = search_specialists_db()
+    result = {}
+    for specialist in data:
+        result[specialist[1]] = specialist[2]
+    return result
+
+
 def get_dictionary_of_users():
     data = search_users_db()
     result = {}
