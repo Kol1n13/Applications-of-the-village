@@ -41,7 +41,8 @@ def specialists_db(data_of_specialists):
         specialists_phone_number INTEGER
     )
     """)
-    db2_cursor.executemany("INSERT INTO specialists VALUES(?,?,?,?);", data_of_specialists)  # filled in the database
+    db2_cursor.executemany("INSERT INTO specialists VALUES(?,?,?,?);",
+                           data_of_specialists)  # filled in the database
     db2_connect.commit()
 
 
@@ -65,28 +66,40 @@ def application_db(data_of_application):
         specialists TEXT
     )
     """)
-    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?);", data_of_application)
+    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?);",
+                           data_of_application)
     db3_connect.commit()
 
 
 # application_db(application_list)
 
 
-def search_db(cursor, table_name):  # return all data from DB in list
-    cursor.execute(f"SELECT * FROM {table_name}")
-    all_results = cursor.fetchall()
+def search_users_db():
+    with sqlite3.connect('users.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM users")
+        all_results = cursor.fetchall()
     return all_results
 
 
-def add_to_table(cursor, connection, table_name, values):  # add value to table_name
+def get_dictionary_of_users():
+    data = search_users_db()
+    result = {}
+    for user in data:
+        result[user[1]] = user[2]
+    return result
+
+
+def add_to_table(cursor, connection, table_name,
+                 values):  # add value to table_name
     placeholders = ', '.join(['?' for _ in values])
     query = f"INSERT INTO {table_name} VALUES ({placeholders});"
     cursor.execute(query, values)
     connection.commit()
 
 
-# users_data = search_db(db1_cursor, 'users')
-# print(users_data)
+# print(get_dictionary_of_users())
+
 
 def get_user_by_id(cursor, user_id):
     cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
