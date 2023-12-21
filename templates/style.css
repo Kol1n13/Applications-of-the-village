@@ -47,12 +47,13 @@
   left: 61px;
 }
 
-.frame .overlap-group {
+.button {
   position: relative;
   width: 86px;
   height: 25px;
   background-color: #13aa52;
   border-radius: 4.2px;
+  color: rgba(255, 255, 255, 0.77);
 }
 
 .frame .text-wrapper {
@@ -76,14 +77,14 @@
   left: 50px;
 }
 
-.frame .block-subtitle {
+h1 {
   position: absolute;
   width: 119px;
   top: 53px;
   left: 0;
   font-family: "Roboto Slab", Helvetica;
   font-weight: 400;
-  color: #000000;
+  color: #FF00FF;
   font-size: 16px;
   letter-spacing: 0;
   line-height: normal;
@@ -111,7 +112,7 @@
   height: 38px;
 }
 
-.frame .rectangle {
+.password {
   position: absolute;
   width: 122px;
   height: 19px;
@@ -149,7 +150,7 @@
   height: 39px;
 }
 
-.frame .rectangle-2 {
+.login {
   position: absolute;
   width: 122px;
   height: 19px;

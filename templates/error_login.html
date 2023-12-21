@@ -13,7 +13,8 @@
           <div class="overlap">
             <div class="overlap-2">
               <h1 class="block-subtitle">Авторизация</h1>
-              <img class="block-icon-trees" src="{{ url_for('static',filename='images/block-2-icon-trees.svg') }}" />
+                <h2 class="error_answer">Ошибка авторизации</h2>
+              <img class="block-icon-trees" src="{{ url_for('static',filename='images/block-2-icon-trees.svg') }}"/>
               <div class="card-body">
                 {% with messages = get_flashed_messages() %}
                   {% if messages %}
