@@ -52,8 +52,8 @@ db3_connect = sqlite3.connect('application.db')
 db3_cursor = db3_connect.cursor()
 
 application_list = [
-    (1, 3, '2004-08-30', 'Pending', 'John Doe'),
-    (2, 2, '2002-02-22', 'Pending', 'John Snow')
+    (1, 3, '2004-08-30', 'Pending', 'John Doe', 'туалет засрался'),
+    (2, 2, '2002-02-22', 'Pending', 'John Snow', "трубу прорвало")
 ]  # get application of application
 
 
@@ -63,15 +63,16 @@ def application_db(data_of_application):
         user_id INTEGER,
         application_date DATE,
         application_status TEXT,
-        specialists TEXT
+        specialists TEXT,
+        comment TEXT
     )
     """)
-    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?);",
-                           data_of_application)
+    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?,?);", data_of_application)
     db3_connect.commit()
 
 
-# application_db(application_list)
+
+#application_db(application_list)
 
 
 def search_users_db():
@@ -89,6 +90,15 @@ def search_specialists_db():
         all_results = cursor.fetchall()
     return all_results
 
+def search_application_db():
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM application")
+        all_results = cursor.fetchall()
+    return all_results
+
+#print(search_application_db())
+
 def get_dictionary_of_specialists():
     data = search_specialists_db()
     result = {}
@@ -97,12 +107,16 @@ def get_dictionary_of_specialists():
     return result
 
 
+
+
 def get_dictionary_of_users():
     data = search_users_db()
     result = {}
     for user in data:
         result[user[1]] = user[2]
     return result
+
+
 
 
 def add_to_table(cursor, connection, table_name,
@@ -121,9 +135,23 @@ def get_user_by_id(cursor, user_id):
     user_data = cursor.fetchone()
     if user_data:
         _, user_login, _, user_phone_number = user_data
-        return f"Адрес: {user_login}. Номер телефона: {user_phone_number}."
+        return user_login, user_phone_number
     else:
         return "Пользователь не найден."
 
 # user_data_by_id = get_user_by_id(db1_cursor, 1)
 # print(user_data_by_id)
+
+def get_data_to_httml():
+    data_app = search_application_db()
+    result = []
+    for application in data_app:
+        id_of_user = application[1]
+        data_of_user = get_user_by_id(db1_cursor, id_of_user)
+        tuple_of_data = (application[0], data_of_user[0], application[5], data_of_user[1])
+        result.append(tuple_of_data)
+    return result
+
+
+print(get_data_to_httml())
+
