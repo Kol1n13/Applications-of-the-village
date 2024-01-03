@@ -51,7 +51,7 @@
   position: absolute;
   width: 135px;
   height: 25px;
-  top: 355px;
+  top: 336px;
   left: 82.5px;
 }
 
@@ -111,7 +111,7 @@
   position: absolute;
   width: 122px;
   height: 38px;
-  top: 265px;
+  top: 239px;
   left: 25px;
 }
 
@@ -148,7 +148,7 @@
 
 .frame .group-wrapper {
   position: absolute;
-  top: 189px;
+  top: 168px;
 }
 
 .frame .group-3 {
@@ -181,4 +181,14 @@
   text-align: center;
   letter-spacing: 0;
   line-height: normal;
+}
+
+.error {
+  color: #F29340;
+  position: absolute;
+  height: 25px;
+  top: 411px;
+  font-family: 'Roboto Slab', Helvetica;
+  font-size: 15px;
+  left: 20px;
 }

@@ -16,9 +16,9 @@ def login():
         if username in specialists and specialists[username] == password:
             return redirect(url_for('specialist_profile'))
         else:
-            return render_template('login.html')
+            return render_template('login.html', error=True)
     else:
-        return render_template('login.html')
+        return render_template('login.html', error=False)
 
 
 @app.route('/user-profile')

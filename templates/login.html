@@ -42,6 +42,9 @@
                   <div class="block-price-button">
                     <button type="submit" class="button">Войти</button>
                   </div>
+                  {% if error %}
+                    <p class="error" >Неправильный логин или пароль</p>
+                  {% endif %}
                 </form>
               </div>
             </div>
