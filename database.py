@@ -28,8 +28,8 @@ db2_connect = sqlite3.connect('specialists.db')
 db2_cursor = db2_connect.cursor()
 
 specialists_list = [
-    (1, 'Дрочислав Сын Сергея', 'Vodka', '88003255711'),
-    (2, 'Артём', 'Pivo', '88001553711')
+    (1, 'саня', 'водка', '88003255711'),
+    (2, 'артем', 'пиво', '88001553711')
 ]  # get data of specialists
 
 
