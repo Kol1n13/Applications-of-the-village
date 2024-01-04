@@ -28,7 +28,8 @@ def user_profile():
 
 @app.route('/specialist-profile')
 def specialist_profile():
-    return 'Специалист зашел в систему!'
+    articles = database.search_applications_db()
+    return render_template('specialist-profile.html', articles=articles)
 
 
 if __name__ == '__main__':
