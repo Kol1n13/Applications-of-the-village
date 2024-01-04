@@ -13,8 +13,8 @@ def login():
         if username in users and users[username][0] == password:
             return redirect(url_for(f'user_profile', id=users[username][1]))
         specialists = database.get_dictionary_of_specialists()
-        if username in specialists and specialists[username] == password:
-            return redirect(url_for('specialist_profile'))
+        if username in specialists and specialists[username][0] == password:
+            return redirect(url_for('specialist_profile', id=specialists[username][1]))
         else:
             return render_template('login.html', error=True)
     else:

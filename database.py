@@ -104,7 +104,7 @@ def get_dictionary_of_specialists():
     data = search_specialists_db()
     result = {}
     for specialist in data:
-        result[specialist[1]] = specialist[2]
+        result[specialist[1]] = (specialist[2], specialist[0])
     return result
 
 
