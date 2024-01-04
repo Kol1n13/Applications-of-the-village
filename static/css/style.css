@@ -22,22 +22,25 @@
   position: absolute;
   width: 151px;
   height: 41px;
-  top: 150px;
+  top: 0%;
   object-fit: cover;
   scale: 2;
+  left: 170px;
+  display: flex;
+  align-content: center;
 }
 
 .frame .block-trees {
   position: relative;
   width: 100%;
-  height: 50%;
+  height: 560px;
   top: 25%;
 }
 
 .frame .overlap {
   position: relative;
   width: 100%;
-  height: 100%;
+  height: 85%;
   background-color: #ffffffb8;
   border-radius: 4.2px;
   box-shadow: 1.1px 1.1px 4.02px #d4d4d440;
@@ -45,6 +48,7 @@
   flex-wrap: nowrap;
   justify-content: center;
   flex-direction: row;
+  top: 15%;
 }
 
 .frame .block-price-button {
