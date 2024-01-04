@@ -28,8 +28,8 @@ db2_connect = sqlite3.connect('specialists.db')
 db2_cursor = db2_connect.cursor()
 
 specialists_list = [
-    (1, 'Дрочислав Сын Сергея', 'Vodka', '88003255711'),
-    (2, 'Артём', 'Pivo', '88001553711')
+    (1, 'саня', 'водка', '88003255711'),
+    (2, 'артем', 'пиво', '88001553711')
 ]  # get data of specialists
 
 
@@ -52,26 +52,31 @@ db3_connect = sqlite3.connect('application.db')
 db3_cursor = db3_connect.cursor()
 
 application_list = [
-    (1, 3, '2004-08-30', 'Pending', 'John Doe'),
-    (2, 2, '2002-02-22', 'Pending', 'John Snow')
+    (1, "Turgeneva 4", "Александр", "Сантехника", "Трубы горят", '2004-08-30', 'Pending', 'саня', 1, "88003555311", "88003255711"),
+    (2, "Lenina 51", "Никита", "Сетевое оборудование", "Роутер сломался", '2002-02-22', 'Pending', 'саня', 2, "88003555511" , "88003255711"),
+    (3, "Turgeneva 4", "Александр", "Проблема со здоровьем", "Висячий", "2050-02-11", 'Pending', 'саня', 1, "88003555311", "88003255711")
 ]  # get application of application
 
 
 def application_db(data_of_application):
     db3_cursor.execute("""CREATE TABLE IF NOT EXISTS application(
         application_id INTEGER PRIMARY KEY,
-        user_id INTEGER,
+        user_login TEXT,
+        user_name TEXT,
+        theme TEXT,
+        user_comment TEXT,
         application_date DATE,
         application_status TEXT,
-        specialists TEXT
+        specialist_name TEXT,
+        user_id INTEGER,
+        user_phone TEXT,
+        specialist_phone TEXT
     )
     """)
-    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?);",
-                           data_of_application)
+    db3_cursor.executemany("INSERT INTO application VALUES(?,?,?,?,?,?,?,?,?,?,?);",data_of_application)
     db3_connect.commit()
 
-
-# application_db(application_list)
+#application_db(application_list)
 
 
 def search_users_db():
@@ -81,6 +86,12 @@ def search_users_db():
         all_results = cursor.fetchall()
     return all_results
 
+def search_applications_db():
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute(f"SELECT * FROM application")
+        all_results = cursor.fetchall()
+    return all_results
 
 def search_specialists_db():
     with sqlite3.connect('specialists.db') as connection:
@@ -101,7 +112,7 @@ def get_dictionary_of_users():
     data = search_users_db()
     result = {}
     for user in data:
-        result[user[1]] = user[2]
+        result[user[1]] = (user[2], user[0])
     return result
 
 
@@ -116,14 +127,15 @@ def add_to_table(cursor, connection, table_name,
 # print(get_dictionary_of_users())
 
 
-def get_user_by_id(cursor, user_id):
-    cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,))
-    user_data = cursor.fetchone()
-    if user_data:
-        _, user_login, _, user_phone_number = user_data
-        return f"Адрес: {user_login}. Номер телефона: {user_phone_number}."
-    else:
-        return "Пользователь не найден."
+def get_user_by_id(user_id):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM application WHERE user_id = ?", (user_id,))
+        user_data = cursor.fetchall()
+        if user_data:
+            return user_data
+        else:
+            return None
 
 # user_data_by_id = get_user_by_id(db1_cursor, 1)
 # print(user_data_by_id)

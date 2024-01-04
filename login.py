@@ -10,8 +10,8 @@ def login():
         username = request.form['username']
         password = request.form['password']
         users = database.get_dictionary_of_users()
-        if username in users and users[username] == password:
-            return redirect(url_for('user_profile'))
+        if username in users and users[username][0] == password:
+            return redirect(url_for(f'user_profile', id=users[username][1]))
         specialists = database.get_dictionary_of_specialists()
         if username in specialists and specialists[username] == password:
             return redirect(url_for('specialist_profile'))
@@ -21,14 +21,17 @@ def login():
         return render_template('login.html', error=False)
 
 
-@app.route('/user-profile')
-def user_profile():
-    return 'Пользователь зашел в систему!'
+@app.route('/user-profile/<int:id>')
+def user_profile(id):
+    articles = database.get_user_by_id(user_id=id)
+    print(articles)
+    return render_template('user-profile.html', articles=articles)
 
 
 @app.route('/specialist-profile')
 def specialist_profile():
-    return 'Специалист зашел в систему!'
+    articles = database.search_applications_db()
+    return render_template('specialist-profile.html', articles=articles)
 
 
 if __name__ == '__main__':
