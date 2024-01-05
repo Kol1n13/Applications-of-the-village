@@ -7,6 +7,13 @@
     <style>
         .custom-navbar {
             background-color: #13AA52; /* Цвет фона панели навигации */
+            margin-bottom: 100px;
+        }
+        .custom-navbar1 {
+            background-color: #13AA52; /* Цвет фона панели навигации */
+            margin-bottom: 100px;
+            max-width: 800px; /* Максимальная ширина navbar */
+            width: 100%; /* Ширина в процентах для адаптивности */
         }
 
         .custom-btn {
@@ -15,8 +22,69 @@
             color: #fff; /* Цвет текста на кнопке "Принять" */
         }
     </style>
+    <script>
+  function goBack() {
+    window.history.back();
+  }
+</script>
 </head>
 <body>
+<nav class="navbar navbar-expand-md navbar-light custom-navbar mx-auto"> <!-- Используем созданный стиль custom-navbar здесь -->
+  <div class="container-fluid">
+    <a class="navbar-brand btn custom-btn" href="/login">Выйти</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      <form class="d-flex ms-auto" role="search">
+        <input class="form-control me-2" type="search" placeholder="Введите телефон" aria-label="Search">
+        <button class="btn custom-btn" type="submit">Принять</button> <!-- Используем созданный стиль custom-btn здесь -->
+      </form>
+    </div>
+  </div>
+</nav>
+<nav class="navbar navbar-expand-lg navbar-dark custom-navbar1 mx-auto rounded-4" aria-label="Offcanvas navbar large">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="">Оформить заявку</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar2" aria-controls="offcanvasNavbar2" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasNavbar2" aria-labelledby="offcanvasNavbar2Label">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbar2Label">Offcanvas</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Dropdown
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+            </li>
+          </ul>
+          <form class="d-flex mt-3 mt-lg-0" role="search">
+            <input class="form-control me-2" type="search" placeholder="Комментарий" aria-label="Search">
+            <button class="btn custom-btn" type="submit">Отправить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </nav>
 <div class="container mt-5">
     <h1> Профиль пользователя </h1>
     {% for el in articles %}
@@ -28,31 +96,6 @@
         <p>Статус заявки: {{el[6]}}</p>
     </div>
     {% endfor %}
-    <nav class="navbar navbar-expand-md navbar-light fixed-top custom-navbar"> <!-- Используем созданный стиль custom-navbar здесь -->
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">Fixed navbar</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarCollapse">
-      <ul class="navbar-nav me-auto mb-2 mb-md-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Введите телефон" aria-label="Search">
-        <button class="btn custom-btn" type="submit">Принять</button> <!-- Используем созданный стиль custom-btn здесь -->
-      </form>
-    </div>
-  </div>
-</nav>
 </div>
 </body>
 </html>
