@@ -24,7 +24,7 @@ def login():
 @app.route('/user-profile/<int:id>', methods=['GET', 'POST'])
 def user_profile(id):
     if request.method == 'POST':
-        print(request.form["search"])
+        print(id, request.form["search"])
     articles = database.get_user_by_id(user_id=id)
     return render_template('user-profile.html', articles=articles)
 

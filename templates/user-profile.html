@@ -89,16 +89,23 @@
     </div>
   </nav>
 <div class="container mt-5">
-    <h1> Профиль пользователя </h1>
-    {% for el in articles %}
-    <div class="alert alert-info">
-        <h2> ID заявки: {{el[0]}}</h2>
-        <p>Тема: {{el[3]}}</p>
-        <p>Имя специалиста: {{el[7]}}</p>
-        <p>Телефон специалиста: {{el[10]}}</p>
-        <p>Статус заявки: {{el[6]}}</p>
-    </div>
-    {% endfor %}
+    <h1>Профиль пользователя</h1>
+    {% if articles %}
+        {% for el in articles %}
+            <div class="alert alert-info">
+                <h2>ID заявки: {{el[0]}}</h2>
+                <p>Тема: {{el[3]}}</p>
+                <p>Имя специалиста: {{el[7]}}</p>
+                <p>Телефон специалиста: {{el[10]}}</p>
+                <p>Статус заявки: {{el[6]}}</p>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning">
+            <p>Нет данных для отображения.</p>
+        </div>
+    {% endif %}
 </div>
+
 </body>
 </html>
