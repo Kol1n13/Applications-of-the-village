@@ -21,10 +21,11 @@ def login():
         return render_template('login.html', error=False)
 
 
-@app.route('/user-profile/<int:id>')
+@app.route('/user-profile/<int:id>', methods=['GET', 'POST'])
 def user_profile(id):
+    if request.method == 'POST':
+        print(request.form["search"])
     articles = database.get_user_by_id(user_id=id)
-    print(articles)
     return render_template('user-profile.html', articles=articles)
 
 
