@@ -1,5 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
 import database
+import datetime
 
 app = Flask(__name__)
 
@@ -14,7 +15,8 @@ def login():
             return redirect(url_for(f'user_profile', id=users[username][1]))
         specialists = database.get_dictionary_of_specialists()
         if username in specialists and specialists[username][0] == password:
-            return redirect(url_for('specialist_profile', id=specialists[username][1]))
+            return redirect(
+                url_for('specialist_profile', id=specialists[username][1]))
         else:
             return render_template('login.html', error=True)
     else:
@@ -24,9 +26,20 @@ def login():
 @app.route('/user-profile/<int:id>', methods=['GET', 'POST'])
 def user_profile(id):
     if request.method == 'POST':
-        print(id, request.form["search"], request.form["dropdownValue"])
+        current_time = datetime.datetime.now().strftime("%H:%M:%S %d/%m/%Y")
+        user_date = database.get_true_user_by_id(id)
+        application_data = (
+            database.count_applications() + 1, user_date[0][1], "Pavlik",
+            request.form["dropdownValue"], request.form["search"],
+            current_time, "Pending", "None_name", id, user_date[0][3],
+            "None_number_of_phone")
+        database.add_application_to_db(application_data)
     articles = database.get_user_by_id(user_id=id)
     return render_template('user-profile.html', articles=articles)
+
+
+##(1, "Turgeneva 4", "Александр", "Сантехника", "Трубы горят",
+# '2004-08-30', 'Pending', 'саня', 1, "88003555311", "88003255711")
 
 
 @app.route('/specialist-profile')
