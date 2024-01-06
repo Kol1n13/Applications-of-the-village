@@ -32,6 +32,17 @@
         crossorigin="anonymous"></script>
 
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', function () {
+                document.getElementById('dropdownValue').value = this.getAttribute('data-value');
+            });
+        });
+    });
+</script>
+
+
 <nav class="navbar navbar-expand-md navbar-light custom-navbar mx-auto"> <!-- Используем созданный стиль custom-navbar здесь -->
   <div class="container-fluid">
     <a class="navbar-brand btn custom-btn" href="/login">Выйти</a>
@@ -47,6 +58,8 @@
     </div>
   </div>
 </nav>
+
+
 <nav class="navbar navbar-expand-lg navbar-dark custom-navbar1 mx-auto rounded-4" aria-label="Offcanvas navbar large">
     <div class="container-fluid">
       <a class="navbar-brand" href="">Оформить заявку</a>
@@ -71,8 +84,8 @@
                 Dropdown
               </a>
               <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#">Action</a></li>
-                <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="Action">Action</a></li>
+                  <li><a class="dropdown-item" href="#" data-value="Another action">Another action</a></li>
                 <li>
                   <hr class="dropdown-divider">
                 </li>
@@ -82,12 +95,17 @@
           </ul>
           <form method="post" class="d-flex mt-3 mt-lg-0" role="search">
             <input class="form-control me-2" type="text" placeholder="Комментарий" aria-label="Search" name="search">
+            <!-- Add a hidden input field to capture the dropdown value -->
+            <input type="hidden" id="dropdownValue" name="dropdownValue">
             <button class="btn custom-btn" type="submit">Отправить</button>
           </form>
+
         </div>
       </div>
     </div>
-  </nav>
+</nav>
+
+
 <div class="container mt-5">
     <h1>Профиль пользователя</h1>
     {% if articles %}
