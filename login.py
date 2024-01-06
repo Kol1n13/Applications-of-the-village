@@ -23,8 +23,9 @@ def login():
         return render_template('login.html', error=False)
 
 
-@app.route('/user-profile/<int:id>', methods=['GET', 'POST'])
-def user_profile(id):
+@app.route('/user-profile', methods=['GET', 'POST'])
+def user_profile():
+    id = request.args.get("id")
     if request.method == 'POST':
         current_time = datetime.datetime.now().strftime("%H:%M:%S %d/%m/%Y")
         user_date = database.get_true_user_by_id(id)
