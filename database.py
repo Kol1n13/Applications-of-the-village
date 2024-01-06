@@ -172,5 +172,18 @@ def get_true_user_by_id(user_id):
         else:
             return None
 
+
+def update_user_phone_number(user_id, new_phone_number):
+    with sqlite3.connect('users.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE users SET user_phone_number = ? WHERE user_id = ?", (new_phone_number, user_id))
+        connection.commit()
+
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE application SET user_phone = ? WHERE user_id = ?", (new_phone_number, user_id))
+        connection.commit()
+
+
 # user_data_by_id = get_user_by_id(db1_cursor, 1)
 # print(user_data_by_id)

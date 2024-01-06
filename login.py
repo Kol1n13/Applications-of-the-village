@@ -26,7 +26,7 @@ def login():
 @app.route('/user-profile', methods=['GET', 'POST'])
 def user_profile():
     id = request.args.get('id')
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form.get("dropdownValue") is not None:
         current_time = datetime.datetime.now().strftime("%H:%M:%S %d/%m/%Y")
         user_date = database.get_true_user_by_id(id)
         application_data = (
@@ -35,6 +35,11 @@ def user_profile():
             current_time, "Pending", "None_name", id, user_date[0][3],
             "None_number_of_phone")
         database.add_application_to_db(application_data)
+    elif request.method == 'POST':
+        new_phone_number = request.form["newPhoneNumber"]
+        database.update_user_phone_number(id, new_phone_number)
+
+
     articles = database.get_user_by_id(user_id=id)
     return render_template('user-profile.html', articles=articles)
 
