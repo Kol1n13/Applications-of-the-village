@@ -185,5 +185,29 @@ def update_user_phone_number(user_id, new_phone_number):
         connection.commit()
 
 
+def update_specialist_phone_number(specialist_id, new_phone_number):
+    with sqlite3.connect('specialists.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE specialists SET specialists_phone_number = ? WHERE specialists_id = ?", (new_phone_number, specialist_id))
+        connection.commit()
+
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("UPDATE application SET specialist_phone = ? WHERE specialist_name = ?", (new_phone_number, find_login_by_id(specialist_id)))
+        connection.commit()
 # user_data_by_id = get_user_by_id(db1_cursor, 1)
 # print(user_data_by_id)
+
+def find_login_by_id(specialist_id):
+    with sqlite3.connect('specialists.db') as connection:
+        cursor = connection.cursor()
+        sql_query = "SELECT specialists_login FROM specialists WHERE specialists_id = ?"
+
+        cursor.execute(sql_query, (specialist_id,))
+
+        result = cursor.fetchone()
+
+        if result:
+            return result[0]  # Возвращаем первый столбец (логин)
+        else:
+            return None  # Если id не найден, возвращаем None

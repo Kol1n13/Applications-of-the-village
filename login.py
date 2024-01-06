@@ -48,8 +48,12 @@ def user_profile():
 # '2004-08-30', 'Pending', 'саня', 1, "88003555311", "88003255711")
 
 
-@app.route('/specialist-profile')
+@app.route('/specialist-profile', methods=['GET', 'POST'])
 def specialist_profile():
+    id = request.args.get('id')
+    if request.method == 'POST':
+        new_phone_number = request.form["newPhoneNumber"]
+        database.update_specialist_phone_number(id, new_phone_number)
     articles = database.search_applications_db()
     return render_template('specialist-profile.html', articles=articles)
 
