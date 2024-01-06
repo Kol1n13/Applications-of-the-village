@@ -13,18 +13,19 @@ def login():
         if username in users and users[username][0] == password:
             return redirect(url_for(f'user_profile', id=users[username][1]))
         specialists = database.get_dictionary_of_specialists()
-        if username in specialists and specialists[username] == password:
-            return redirect(url_for('specialist_profile'))
+        if username in specialists and specialists[username][0] == password:
+            return redirect(url_for('specialist_profile', id=specialists[username][1]))
         else:
             return render_template('login.html', error=True)
     else:
         return render_template('login.html', error=False)
 
 
-@app.route('/user-profile/<int:id>')
+@app.route('/user-profile/<int:id>', methods=['GET', 'POST'])
 def user_profile(id):
+    if request.method == 'POST':
+        print(id, request.form["search"])
     articles = database.get_user_by_id(user_id=id)
-    print(articles)
     return render_template('user-profile.html', articles=articles)
 
 
