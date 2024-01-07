@@ -7,6 +7,7 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
         crossorigin="anonymous">
     <style>
+
         .custom-navbar {
             background-color: #13AA52;
         }
@@ -26,7 +27,7 @@
             background-color: #F29340;
             border-color: #F29340;
             color: #FFFFFF;
-            width: 120px;
+            width: 200px;
             height: 50px;
             border-radius: 100px 20px;
             margin-right: 10px;
@@ -36,7 +37,7 @@
             width: 150px;
         }
     </style>
-    <title>Специалист</title>
+    <title>Личный кабинет специалиста</title>
 </head>
 
 <body>
@@ -59,16 +60,15 @@
     </nav>
 
     <div class="container mt-5">
-        <h1> Профиль специалиста </h1>
-        {% for el in articles %}
-        <div class="alert alert-info">
+    <h1> Профиль специалиста </h1>
+    {% for el in articles %}
+    <div class="alert alert-info">
             <h2> Тема: {{el[3]}}</h2>
             <p>Имя заказчика: {{el[2]}}</p>
             <p>Комментарий заказчика: {{el[4]}}</p>
             <p>Телефон заказчика: {{el[9]}}</p>
             <p>Дата: {{el[5]}}</p>
             <p>Статус заявки: {{el[6]}}</p>
-
             {% if el[6] == 'In Progress' %}
             <div class="d-flex justify-content-end">
                 <form method="post" class="d-flex" role="search">
@@ -78,18 +78,14 @@
                 </form>
             </div>
             {% else %}
-            <nav class="navbar navbar-expand-md navbar-light custom-navbar1 mx-auto">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="navbarCollapse1">
-                        <form method="post" class="d-flex ms-auto" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Введите время ожидания"
-                                aria-label="Search" name="waitingTime">
-                            <input type="hidden" name="requestId" value="{{ el[0] }}">
-                            <button class="btn custom-btn accept_button" type="submit">Принять заявку</button>
-                        </form>
-                    </div>
-                </div>
-            </nav>
+            <div class="d-flex justify-content-end">
+                <form method="post" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Введите время ожидания"
+                                aria-label="Search" name="waitingTime" style="width: 250px;"> <!-- Уменьшена ширина поля ввода -->
+                    <button class="btn custom-btn reject_button" type="submit" name="action" value="rejected">Принять заявку</button>
+                    <input type="hidden" name="requestId" value="{{ el[0] }}">
+                </form>
+            </div>
             {% endif %}
         </div>
         {% endfor %}
