@@ -51,7 +51,11 @@ def user_profile():
 @app.route('/specialist-profile', methods=['GET', 'POST'])
 def specialist_profile():
     id = request.args.get('id')
-    if request.method == 'POST':
+    if request.method == 'POST' and request.form.get("waitingTime") is not None:
+        specialist_comment = request.form["waitingTime"]
+        application_id = request.form["requestId"]
+        database.update_application(application_id, id, specialist_comment)
+    elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
         database.update_specialist_phone_number(id, new_phone_number)
     articles = database.search_applications_db()

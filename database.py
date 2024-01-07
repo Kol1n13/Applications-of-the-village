@@ -53,11 +53,11 @@ db3_cursor = db3_connect.cursor()
 
 application_list = [
     (1, "Turgeneva 4", "Александр", "Сантехника", "Трубы горят", '2004-08-30',
-     'Pending', 'саня', 1, "88003555311", "88003255711"),
+     'Pending', 'саня', 1, "88003555311", "88003255711", "None"),
     (2, "Lenina 51", "Никита", "Сетевое оборудование", "Роутер сломался",
-     '2002-02-22', 'Pending', 'саня', 2, "88003555511", "88003255711"),
+     '2002-02-22', 'Pending', 'саня', 2, "88003555511", "88003255711", "None"),
     (3, "Turgeneva 4", "Александр", "Проблема со здоровьем", "Висячий",
-     "2050-02-11", 'Pending', 'саня', 1, "88003555311", "88003255711")
+     "2050-02-11", 'Pending', 'саня', 1, "88003555311", "88003255711", "None")
 ]  # get application of application
 
 
@@ -73,16 +73,17 @@ def application_db(data_of_application):
         specialist_name TEXT,
         user_id INTEGER,
         user_phone TEXT,
-        specialist_phone TEXT
+        specialist_phone TEXT,
+        specialist_comment
     )
     """)
     db3_cursor.executemany(
-        "INSERT INTO application VALUES(?,?,?,?,?,?,?,?,?,?,?);",
+        "INSERT INTO application VALUES(?,?,?,?,?,?,?,?,?,?,?,?);",
         data_of_application)
     db3_connect.commit()
 
 
-# application_db(application_list)
+#application_db(application_list)
 
 
 def search_users_db():
@@ -211,3 +212,38 @@ def find_login_by_id(specialist_id):
             return result[0]  # Возвращаем первый столбец (логин)
         else:
             return None  # Если id не найден, возвращаем None
+
+
+def update_application(application_id, specialist_id, specialist_comment):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+
+        # Update specialist information in the application table
+        cursor.execute("""
+            UPDATE application 
+            SET specialist_name = ?,
+                specialist_phone = ?,
+                application_status = ? 
+            WHERE application_id = ?
+        """, (
+        find_login_by_id(specialist_id), get_specialist_phone_by_id(specialist_id), 'In Progress', application_id))
+
+        # Insert specialist comment into the application table
+        cursor.execute("""
+            UPDATE application 
+            SET specialist_comment = ? 
+            WHERE application_id = ?
+        """, (specialist_comment, application_id))
+
+        connection.commit()
+
+
+def get_specialist_phone_by_id(specialist_id):
+    with sqlite3.connect('specialists.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT specialists_phone_number FROM specialists WHERE specialists_id = ?", (specialist_id,))
+        phone_number = cursor.fetchone()[0]
+    return phone_number
+
+# Example usage:
+# update_application(application_id=1, specialist_id=1, specialist_comment="Fixed the issue.")
