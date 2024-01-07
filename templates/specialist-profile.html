@@ -9,33 +9,31 @@
     <style>
         .custom-navbar {
             background-color: #13AA52;
-            /* Цвет фона панели навигации */
         }
 
         .custom-navbar1 {
             background-color: #CFF4FC;
-            /* Цвет фона панели навигации */
         }
 
         .custom-btn {
             background-color: #F29340;
-            /* Цвет фона кнопки "Принять" */
             border-color: #F29340;
-            /* Цвет границы кнопки "Принять" */
             color: #fff;
-            /* Цвет текста на кнопке "Принять" */
         }
 
-        .accept_button {
-            right: 10%;
-            top: 50%;
+        .completed_button,
+        .reject_button {
             background-color: #F29340;
             border-color: #F29340;
             color: #FFFFFF;
-            width: 250px; /* Увеличенная ширина кнопки */
+            width: 120px;
             height: 50px;
             border-radius: 100px 20px;
-            padding: 10px; /* Увеличенный внутренний отступ */
+            margin-right: 10px;
+        }
+
+        .service_cost_input {
+            width: 150px;
         }
     </style>
     <title>Специалист</title>
@@ -44,7 +42,6 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-light custom-navbar mx-auto">
-        <!-- Используем созданный стиль custom-navbar здесь -->
         <div class="container-fluid">
             <a class="navbar-brand btn custom-btn" href="/login">Выйти</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -56,7 +53,6 @@
                     <input class="form-control me-2" type="search" placeholder="Введите телефон" aria-label="Search"
                         name="newPhoneNumber">
                     <button class="btn custom-btn" type="submit">Принять</button>
-                    <!-- Используем созданный стиль custom-btn здесь -->
                 </form>
             </div>
         </div>
@@ -72,21 +68,29 @@
             <p>Телефон заказчика: {{el[9]}}</p>
             <p>Дата: {{el[5]}}</p>
             <p>Статус заявки: {{el[6]}}</p>
-            <nav class="navbar navbar-expand-md navbar-light custom-navbar1 mx-auto">
-    <!-- Используем созданный стиль custom-navbar здесь -->
-    <div class="container-fluid">
-        <div class="collapse navbar-collapse" id="navbarCollapse1">
-            <form method="post" class="d-flex ms-auto" role="search">
-                <input class="form-control me-2" type="search" placeholder="Введите время ожидания" aria-label="Search" name="waitingTime">
-                <!-- Add a hidden input field for the request ID -->
-                <input type="hidden" name="requestId" value="{{ el[0] }}">
-                <button class="btn custom-btn accept_button" type="submit">Принять заявку</button>
-                <!-- Используем созданный стиль custom-btn здесь -->
-            </form>
-        </div>
-    </div>
-</nav>
 
+            {% if el[6] == 'In Progress' %}
+            <div class="d-flex justify-content-end">
+                <form method="post" class="d-flex" role="search">
+                    <button class="btn custom-btn completed_button" type="submit" name="action" value="completed">Заказ выполнен</button>
+                    <button class="btn custom-btn reject_button" type="submit" name="action" value="rejected">Отказаться от заказа</button>
+                    <input type="hidden" name="requestId" value="{{ el[0] }}">
+                </form>
+            </div>
+            {% else %}
+            <nav class="navbar navbar-expand-md navbar-light custom-navbar1 mx-auto">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarCollapse1">
+                        <form method="post" class="d-flex ms-auto" role="search">
+                            <input class="form-control me-2" type="search" placeholder="Введите время ожидания"
+                                aria-label="Search" name="waitingTime">
+                            <input type="hidden" name="requestId" value="{{ el[0] }}">
+                            <button class="btn custom-btn accept_button" type="submit">Принять заявку</button>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+            {% endif %}
         </div>
         {% endfor %}
     </div>

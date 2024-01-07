@@ -247,3 +247,38 @@ def get_specialist_phone_by_id(specialist_id):
 
 # Example usage:
 # update_application(application_id=1, specialist_id=1, specialist_comment="Fixed the issue.")
+
+def application_task_complete(application_id):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+
+        # Update application status to "completed"
+        cursor.execute("""
+            UPDATE application 
+            SET application_status = 'Completed' 
+            WHERE application_id = ?
+        """, (application_id,))
+
+        connection.commit()
+
+# Example usage:
+# application_task_complete(application_id=1)
+
+def application_task_cancel(application_id):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+
+        # Update application fields for the specified application_id
+        cursor.execute("""
+            UPDATE application 
+            SET specialist_name = 'не назначен специалист',
+                specialist_phone = 'не назначен специалист',
+                application_status = 'Pending',
+                specialist_comment = 'не назначен специалист' 
+            WHERE application_id = ?
+        """, (application_id,))
+
+        connection.commit()
+
+# Example usage:
+# application_task_cancel(application_id=1)

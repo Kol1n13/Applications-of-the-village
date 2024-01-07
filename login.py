@@ -33,7 +33,7 @@ def user_profile():
             database.count_applications() + 1, user_date[0][1], "Pavlik",
             request.form["dropdownValue"], request.form["search"],
             current_time, "Pending", "None_name", id, user_date[0][3],
-            "None_number_of_phone")
+            "None_number_of_phone", "None")
         database.add_application_to_db(application_data)
     elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
@@ -55,6 +55,14 @@ def specialist_profile():
         specialist_comment = request.form["waitingTime"]
         application_id = request.form["requestId"]
         database.update_application(application_id, id, specialist_comment)
+    elif request.method == 'POST' and request.form.get("action") is not None:
+        action = request.form.get("action")
+        if action == "completed":
+            application_id = request.form["requestId"]
+            database.application_task_complete(application_id)
+        else:
+            application_id = request.form["requestId"]
+            database.application_task_cancel(application_id)
     elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
         database.update_specialist_phone_number(id, new_phone_number)
