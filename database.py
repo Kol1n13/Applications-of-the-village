@@ -83,7 +83,7 @@ def application_db(data_of_application):
     db3_connect.commit()
 
 
-#application_db(application_list)
+# application_db(application_list)
 
 
 def search_users_db():
@@ -118,6 +118,22 @@ def get_dictionary_of_specialists():
     return result
 
 
+def is_user_registered(id):
+    data = search_users_db()
+    for user in data:
+        if user[1] == id:
+            return True
+    return False
+
+
+def is_spec_registered(id):
+    data = search_specialists_db()
+    for spec in data:
+        if spec[1] == id:
+            return True
+    return False
+
+
 def get_dictionary_of_users():
     data = search_users_db()
     result = {}
@@ -133,13 +149,13 @@ def add_to_table(cursor, connection, table_name,
     cursor.execute(query, values)
     connection.commit()
 
+
 def count_applications():
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
         cursor.execute("SELECT COUNT(*) FROM application")
         count = cursor.fetchone()[0]
     return count
-
 
 
 # print(get_dictionary_of_users())
@@ -156,12 +172,14 @@ def get_user_by_id(user_id):
         else:
             return None
 
+
 def add_application_to_db(values):
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
         placeholders = ', '.join(['?' for _ in values])
         query = f"INSERT INTO application VALUES ({placeholders});"
         cursor.execute(query, values)
+
 
 def get_true_user_by_id(user_id):
     with sqlite3.connect('users.db') as connection:
@@ -189,13 +207,17 @@ def update_user_phone_number(user_id, new_phone_number):
 def update_specialist_phone_number(specialist_id, new_phone_number):
     with sqlite3.connect('specialists.db') as connection:
         cursor = connection.cursor()
-        cursor.execute("UPDATE specialists SET specialists_phone_number = ? WHERE specialists_id = ?", (new_phone_number, specialist_id))
+        cursor.execute("UPDATE specialists SET specialists_phone_number = ? WHERE specialists_id = ?",
+                       (new_phone_number, specialist_id))
         connection.commit()
 
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
-        cursor.execute("UPDATE application SET specialist_phone = ? WHERE specialist_name = ?", (new_phone_number, find_login_by_id(specialist_id)))
+        cursor.execute("UPDATE application SET specialist_phone = ? WHERE specialist_name = ?",
+                       (new_phone_number, find_login_by_id(specialist_id)))
         connection.commit()
+
+
 # user_data_by_id = get_user_by_id(db1_cursor, 1)
 # print(user_data_by_id)
 
@@ -226,7 +248,7 @@ def update_application(application_id, specialist_id, specialist_comment):
                 application_status = ? 
             WHERE application_id = ?
         """, (
-        find_login_by_id(specialist_id), get_specialist_phone_by_id(specialist_id), 'In Progress', application_id))
+            find_login_by_id(specialist_id), get_specialist_phone_by_id(specialist_id), 'In Progress', application_id))
 
         # Insert specialist comment into the application table
         cursor.execute("""
@@ -245,6 +267,7 @@ def get_specialist_phone_by_id(specialist_id):
         phone_number = cursor.fetchone()[0]
     return phone_number
 
+
 # Example usage:
 # update_application(application_id=1, specialist_id=1, specialist_comment="Fixed the issue.")
 
@@ -260,6 +283,7 @@ def application_task_complete(application_id):
         """, (application_id,))
 
         connection.commit()
+
 
 # Example usage:
 # application_task_complete(application_id=1)

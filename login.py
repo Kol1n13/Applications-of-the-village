@@ -12,7 +12,7 @@ def login():
         password = request.form['password']
         users = database.get_dictionary_of_users()
         if username in users and users[username][0] == password:
-            return redirect(url_for(f'user_profile', id=users[username][1]))
+            return redirect(url_for(f'user_profile', isAuthenticated=True, id=users[username][1]))
         specialists = database.get_dictionary_of_specialists()
         if username in specialists and specialists[username][0] == password:
             return redirect(
@@ -38,7 +38,6 @@ def user_profile():
     elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
         database.update_user_phone_number(id, new_phone_number)
-
 
     articles = database.get_user_by_id(user_id=id)
     return render_template('user-profile.html', articles=articles)
