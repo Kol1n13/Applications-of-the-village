@@ -4,10 +4,9 @@ db1_connect = sqlite3.connect('users.db')
 db1_cursor = db1_connect.cursor()
 
 users_list = [
-    (1, 'Turgeneva 4', 'Durka', '88003555311'),
-    (2, 'Lenina 51', 'x2 Durka', '88003555511'),
-    (3, 'Kraulya 73', 'OldHome', '88003555711')
-]  # get data of users
+    (1, 'Дружная 253', '1', '89533843071'),
+    (2, 'Летняя 82', '2', '89222984020'),
+]
 
 
 def users_db(data_of_users):
@@ -22,15 +21,14 @@ def users_db(data_of_users):
     db1_connect.commit()
 
 
-# users_db(users_list)
 
 db2_connect = sqlite3.connect('specialists.db')
 db2_cursor = db2_connect.cursor()
 
 specialists_list = [
-    (1, 'саня', 'водка', '88003255711'),
-    (2, 'артем', 'пиво', '88001553711')
-]  # get data of specialists
+    (1, 'Александр', '1', '89024109226'),
+    (2, 'Сергей', '2', '89826761524')
+]
 
 
 def specialists_db(data_of_specialists):
@@ -46,19 +44,15 @@ def specialists_db(data_of_specialists):
     db2_connect.commit()
 
 
-# specialists_db(specialists_list)
+#specialists_db(specialists_list)
 
 db3_connect = sqlite3.connect('application.db')
 db3_cursor = db3_connect.cursor()
 
 application_list = [
-    (1, "Turgeneva 4", "Александр", "Сантехника", "Трубы горят", '2004-08-30',
-     'Pending', 'саня', 1, "88003555311", "88003255711", "None"),
-    (2, "Lenina 51", "Никита", "Сетевое оборудование", "Роутер сломался",
-     '2002-02-22', 'Pending', 'саня', 2, "88003555511", "88003255711", "None"),
-    (3, "Turgeneva 4", "Александр", "Проблема со здоровьем", "Висячий",
-     "2050-02-11", 'Pending', 'саня', 1, "88003555311", "88003255711", "None")
-]  # get application of application
+    (1, "Turgeneva 4", "Александр", "Электричество", "При включении ", '2024-01-08',
+     'В ожидании', 'Не задано', 1, "89533843071", "Не задано", "None"),
+]
 
 
 def application_db(data_of_application):
@@ -112,7 +106,7 @@ def search_applications_db1(specialist_id):
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
         cursor.execute("SELECT * FROM application WHERE specialist_name = ? "
-                       "OR application_status = 'Pending'", (find_login_by_id(specialist_id),))
+                       "OR application_status = 'В ожидании'", (find_login_by_id(specialist_id),))
         all_results = cursor.fetchall()
     return all_results
 
@@ -257,7 +251,7 @@ def update_application(application_id, specialist_id, specialist_comment):
                 application_status = ? 
             WHERE application_id = ?
         """, (
-            find_login_by_id(specialist_id), get_specialist_phone_by_id(specialist_id), 'In Progress', application_id))
+            find_login_by_id(specialist_id), get_specialist_phone_by_id(specialist_id), 'Выполняется', application_id))
 
         # Insert specialist comment into the application table
         cursor.execute("""
@@ -287,7 +281,7 @@ def application_task_complete(application_id):
         # Update application status to "completed"
         cursor.execute("""
             UPDATE application 
-            SET application_status = 'Completed' 
+            SET application_status = 'Выполнено' 
             WHERE application_id = ?
         """, (application_id,))
 
@@ -306,7 +300,7 @@ def application_task_cancel(application_id):
             UPDATE application 
             SET specialist_name = 'не назначен специалист',
                 specialist_phone = 'не назначен специалист',
-                application_status = 'Pending',
+                application_status = 'В ожидании',
                 specialist_comment = 'не назначен специалист' 
             WHERE application_id = ?
         """, (application_id,))

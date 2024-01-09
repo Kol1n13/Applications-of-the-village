@@ -30,10 +30,10 @@ def user_profile():
         current_time = datetime.datetime.now().strftime("%H:%M:%S %d/%m/%Y")
         user_date = database.get_true_user_by_id(id)
         application_data = (
-            database.count_applications() + 1, user_date[0][1], "Pavlik",
+            database.count_applications() + 1, user_date[0][1], "Не задано",
             request.form["dropdownValue"], request.form["search"],
-            current_time, "Pending", "None_name", id, user_date[0][3],
-            "None_number_of_phone", "None")
+            current_time, "В ожидании", "Не задано", id, user_date[0][3],
+            "Не задано", "None")
         database.add_application_to_db(application_data)
     elif request.method == 'POST' and request.form.get("delete") is not None:
         application_id = request.form.get("delete")
@@ -43,6 +43,8 @@ def user_profile():
         database.update_user_phone_number(id, new_phone_number)
 
     articles = database.get_user_by_id(user_id=id)
+    if articles:
+        articles.reverse()
     return render_template('user-profile.html', articles=articles)
 
 

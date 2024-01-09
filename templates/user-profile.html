@@ -35,7 +35,7 @@
     </style>
 
 </head>
-<meta http-equiv="refresh" content="60">
+<meta http-equiv="refresh" content="25">
 <body>
 
     <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -116,7 +116,7 @@
             <p>Имя специалиста: {{el[7]}}</p>
             <p>Телефон специалиста: {{el[10]}}</p>
             <p>Статус заявки: {{el[6]}}</p>
-            {% if el[6] == "Pending" %}
+            {% if el[6] == "В ожидании" %}
             <form method="post" class="d-flex mt-3 mt-lg-0" role="search">
                 <input type="hidden" name="delete" value="{{ el[0] }}">
                 <button class="btn custom-btn" type="submit">Удалить</button>
