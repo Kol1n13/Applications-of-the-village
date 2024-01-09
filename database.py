@@ -83,7 +83,7 @@ def application_db(data_of_application):
     db3_connect.commit()
 
 
-# application_db(application_list)
+#application_db(application_list)
 
 
 def search_users_db():
@@ -94,18 +94,25 @@ def search_users_db():
     return all_results
 
 
-def search_applications_db():
+def search_applications_db(id):
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
         cursor.execute(f"SELECT * FROM application")
         all_results = cursor.fetchall()
     return all_results
 
-
 def search_specialists_db():
     with sqlite3.connect('specialists.db') as connection:
         cursor = connection.cursor()
         cursor.execute(f"SELECT * FROM specialists")
+        all_results = cursor.fetchall()
+    return all_results
+
+def search_applications_db1(specialist_id):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM application WHERE specialist_name = ? "
+                       "OR application_status = 'Pending'", (find_login_by_id(specialist_id),))
         all_results = cursor.fetchall()
     return all_results
 
@@ -177,8 +184,10 @@ def add_application_to_db(values):
     with sqlite3.connect('application.db') as connection:
         cursor = connection.cursor()
         placeholders = ', '.join(['?' for _ in values])
-        query = f"INSERT INTO application VALUES ({placeholders});"
+        query = f"INSERT INTO application VALUES ({placeholders})"
         cursor.execute(query, values)
+        connection.commit()
+
 
 
 def get_true_user_by_id(user_id):
@@ -306,3 +315,15 @@ def application_task_cancel(application_id):
 
 # Example usage:
 # application_task_cancel(application_id=1)
+
+def delete_application(application_id):
+    with sqlite3.connect('application.db') as connection:
+        cursor = connection.cursor()
+
+        # Delete the application with the specified application_id
+        cursor.execute("DELETE FROM application WHERE application_id = ?", (application_id,))
+
+        connection.commit()
+
+# Example usage:
+# delete_application(application_id=1)

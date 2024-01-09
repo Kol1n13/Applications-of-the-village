@@ -35,6 +35,9 @@ def user_profile():
             current_time, "Pending", "None_name", id, user_date[0][3],
             "None_number_of_phone", "None")
         database.add_application_to_db(application_data)
+    elif request.method == 'POST' and request.form.get("delete") is not None:
+        application_id = request.form.get("delete")
+        database.delete_application(application_id)
     elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
         database.update_user_phone_number(id, new_phone_number)
@@ -65,7 +68,7 @@ def specialist_profile():
     elif request.method == 'POST':
         new_phone_number = request.form["newPhoneNumber"]
         database.update_specialist_phone_number(id, new_phone_number)
-    articles = database.search_applications_db()
+    articles = database.search_applications_db1(id)
     return render_template('specialist-profile.html', articles=articles)
 
 
