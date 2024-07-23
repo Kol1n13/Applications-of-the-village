@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+        crossorigin="anonymous">
+    <style>
+
+        .custom-navbar {
+            background-color: #13AA52;
+        }
+
+        .custom-navbar1 {
+            background-color: #CFF4FC;
+        }
+
+        .custom-btn {
+            background-color: #F29340;
+            border-color: #F29340;
+            color: #fff;
+        }
+
+        .completed_button,
+        .reject_button {
+            background-color: #F29340;
+            border-color: #F29340;
+            color: #FFFFFF;
+            width: 200px;
+            height: 50px;
+            border-radius: 100px 20px;
+            margin-right: 10px;
+        }
+
+        .service_cost_input {
+            width: 150px;
+        }
+    </style>
+    <title>Личный кабинет специалиста</title>
+</head>
+<meta http-equiv="refresh" content="25">
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-light custom-navbar mx-auto">
+        <div class="container-fluid">
+            <a class="navbar-brand btn custom-btn" href="/login">Выйти</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <form method="post" class="d-flex ms-auto" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Введите телефон" aria-label="Search"
+                        name="newPhoneNumber">
+                    <button class="btn custom-btn" type="submit">Принять</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-5">
+    <h1> Профиль специалиста </h1>
+    {% for el in articles %}
+    <div class="alert alert-info">
+            <h2> Тема: {{el[3]}}</h2>
+            <p>Имя заказчика: {{el[2]}}</p>
+            <p>Комментарий заказчика: {{el[4]}}</p>
+            <p>Телефон заказчика: {{el[9]}}</p>
+            <p>Дата: {{el[5]}}</p>
+            <p>Статус заявки: {{el[6]}}</p>
+            {% if el[6] == 'Выполняется' %}
+            <div class="d-flex justify-content-end">
+                <form method="post" class="d-flex" role="search">
+                    <button class="btn custom-btn completed_button" type="submit" name="action" value="completed">Заказ выполнен</button>
+                    <button class="btn custom-btn reject_button" type="submit" name="action" value="rejected">Отказаться от заказа</button>
+                    <input type="hidden" name="requestId" value="{{ el[0] }}">
+                </form>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-end">
+                <form method="post" class="d-flex" role="search">
+                    <input class="form-control me-2" type="search" placeholder="Введите время ожидания"
+                                aria-label="Search" name="waitingTime" style="width: 250px;"> <!-- Уменьшена ширина поля ввода -->
+                    <button class="btn custom-btn reject_button" type="submit" name="action" value="rejected">Принять заявку</button>
+                    <input type="hidden" name="requestId" value="{{ el[0] }}">
+                </form>
+            </div>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+
+</html>
